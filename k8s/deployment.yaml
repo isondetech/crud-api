@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-devops-starter
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: node-devops-starter
+  template:
+    metadata:
+      labels:
+        app: node-devops-starter
+    spec:
+      containers:
+        - name: api
+          image: ghcr.io/your-org/node-devops-starter:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: PORT
+              value: "3000"
+            - name: SERVICE_NAME
+              value: "node-devops-starter"
+            - name: MONGO_URI
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-conn
+                  key: uri
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "256Mi"
