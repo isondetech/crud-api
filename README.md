@@ -1,6 +1,6 @@
 # node-devops-starter
 
-A tiny Node.js + Express API with MongoDB — designed as a **DevOps practice app**. Includes Docker, docker-compose, basic health/readiness endpoints, and Kubernetes manifests (Deployment/Service/HPA/Secret).
+A tiny Node.js + Express API with MongoDB, designed as a **DevOps practice app**.
 
 ## Endpoints
 - `GET /healthz` — liveness
